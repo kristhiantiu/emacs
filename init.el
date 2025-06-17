@@ -46,6 +46,16 @@
         js2-basic-offset 4))
 
 ;; =============================
+;; COMPANY MODEE SETUP
+;; =============================
+
+(use-package company
+  :hook (js2-mode . company-mode)
+  :config
+  (setq company-idle-delay 0.1
+        company-minimum-prefix-length 1))
+
+;; =============================
 ;; FILE TREE (NEOTREE)
 ;; =============================
 (use-package neotree
