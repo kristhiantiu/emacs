@@ -1,7 +1,24 @@
 URL: https://caiorss.github.io/Emacs-Elisp-Programming/Keybindings.html
 
-*Bookmarks:
+* Select Copy and Paste:
+- C - /         Undo
+- C - _ 	Undo
+- C - x u 	Redo
+- C - Space 	Begin Selection
+- C - G 	Cancel Selection
+- C-x h 	Select the whole buffer
+- M-w 	Copy
+- C-y 	Paste (Yank)
+- C-w 	Cut (Wipe out), Delete and copy to clipboard (Kill Ring)
+  	 
+* Bookmarks:
 - C-x r m 	Add current buffer to bookmarks.
 - C-x r b 	Open a buffer from bookmarks.
 - C-x r l 	List bookmarks.
 
+* Buffers:
+- C-x b 	switch-to-buffer 	Select Another Buffer
+- C-x C-b 	list-buffers 	List all buffers
+- C-x k 	kill-buffer 	Kill a buffer
+- C-x [right] 	next-buffer 	Move to next buffer
+- C-x [left] 	previous-buffer 	Move to previous buffer
