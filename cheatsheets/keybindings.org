@@ -1,0 +1,7 @@
+URL: https://caiorss.github.io/Emacs-Elisp-Programming/Keybindings.html
+
+*Bookmarks:
+- C-x r m 	Add current buffer to bookmarks.
+- C-x r b 	Open a buffer from bookmarks.
+- C-x r l 	List bookmarks.
+
