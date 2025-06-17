@@ -46,6 +46,18 @@
         js2-basic-offset 4))
 
 ;; =============================
+;; LSP MODE SETUP
+;; =============================
+
+(use-package lsp-mode
+  :ensure t
+  :hook ((js2-mode . lsp))         ;; IMPORTANT : npm install -g typescript typescript-language-server
+  :commands lsp
+  :config
+  (setq lsp-enable-snippet t
+        lsp-completion-provider :capf))
+
+;; =============================
 ;; COMPANY MODEE SETUP
 ;; =============================
 
