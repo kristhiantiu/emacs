@@ -36,6 +36,15 @@
 (electric-pair-mode 1)
 
 ;; =============================
+;; STARTUP                       ;; Comment below if need default emacs startup
+;;==============================
+(setq inhibit-startup-screen t)
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (bookmark-bmenu-list)
+            (switch-to-buffer "*Bookmark List*")))
+
+;; =============================
 ;; VTERM
 ;; =============================
 ;; Install and configure vterm
@@ -78,7 +87,7 @@
 ;; =============================
 (use-package web-mode
   :ensure t
-  :mode ("\\.html\\'" "\\.jsx\\'" "\\.tsx\\'" "\\.astro\\'")
+  :mode ("\\.html\\'" "\\.jsx\\'" "\\.tsx\\'")
   :hook ((web-mode . my/web-mode-setup)))
 
 (defun my/web-mode-setup ()
@@ -93,6 +102,19 @@
 (setq web-mode-markup-indent-offset 2)
 (setq web-mode-code-indent-offset 2)
 (setq web-mode-css-indent-offset 2)
+
+;; =============================
+;; ASTRO MODE SETUP
+;; =============================
+(use-package web-mode
+  :ensure t
+  :mode ("\\.astro\\'")
+  :config
+  (add-hook 'web-mode-hook
+            (lambda ()
+              (when (string-equal "astro" (file-name-extension buffer-file-name))
+                (lsp)
+                (prettier-js-mode 1)))))
 
 ;; =============================
 ;; TS MODE SETUP
