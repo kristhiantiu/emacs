@@ -36,6 +36,14 @@
 (electric-pair-mode 1)
 
 ;; =============================
+;; VTERM
+;; =============================
+;; Install and configure vterm
+(use-package vterm
+  :ensure t
+  :hook (vterm-mode . (lambda () (display-line-numbers-mode 0))))
+
+;; =============================
 ;; Autocorrect
 ;; =============================
 (use-package yasnippet
