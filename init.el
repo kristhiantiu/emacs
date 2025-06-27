@@ -36,6 +36,26 @@
 (electric-pair-mode 1)
 
 ;; =============================
+;; Autocorrect
+;; =============================
+(use-package yasnippet
+  :ensure t
+  :config
+  (yas-global-mode 1)) ;; or use prog-mode hook if you prefer
+
+
+;; =============================
+;; FLYCHECK - show error messages inline
+;; =============================
+(setq flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list)
+
+;; =============================
+;; PRETTIERJS SETUP
+;; =============================
+(use-package prettier-js :ensure t)
+
+
+;; =============================
 ;; JS2 MODE SETUP
 ;; =============================
 (use-package js2-mode
@@ -44,6 +64,36 @@
   :config
   (setq js-indent-level 4
         js2-basic-offset 4))
+
+;; =============================
+;; WEB MODE SETUP
+;; =============================
+(use-package web-mode
+  :ensure t
+  :mode ("\\.html\\'" "\\.jsx\\'" "\\.tsx\\'" "\\.astro\\'")
+  :hook ((web-mode . my/web-mode-setup)))
+
+(defun my/web-mode-setup ()
+  "Custom setup for web-mode with LSP, company, and formatting."
+  (setq web-mode-enable-auto-quoting nil) ;; Avoid unwanted quotes
+  (display-line-numbers-mode 1)
+  (company-mode 1)
+  (lsp) ;; Starts language server
+  (prettier-js-mode 1)) ;; Format on save
+
+;; Optional: additional settings for indentation, etc.
+(setq web-mode-markup-indent-offset 2)
+(setq web-mode-code-indent-offset 2)
+(setq web-mode-css-indent-offset 2)
+
+;; =============================
+;; TS MODE SETUP
+;; =============================
+(use-package typescript-mode
+  :ensure t
+  :mode "\\.ts\\'"
+  :hook ((typescript-mode . lsp)
+         (typescript-mode . company-mode)))
 
 ;; =============================
 ;; LSP MODE SETUP
@@ -88,3 +138,23 @@
 
 (with-eval-after-load 'chatgpt-shell
   (setq chatgpt-shell-backend 'openai))
+
+;; =============================
+;; ORG MODE
+;; =============================
+(require 'org-tempo) ;; key bindings
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(chatgpt-shell company js2-mode lsp-ui neotree prettier-js
+		   typescript-mode web-mode web-mode-edit-element
+		   yasnippet-snippets)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
