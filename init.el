@@ -37,12 +37,18 @@
 
 ;; =============================
 ;; STARTUP                       ;; Comment below if need default emacs startup
-;;==============================
+;; =============================
 (setq inhibit-startup-screen t)
 (add-hook 'emacs-startup-hook
           (lambda ()
             (bookmark-bmenu-list)
             (switch-to-buffer "*Bookmark List*")))
+
+;; =============================
+;; MOVE BACKUP *.*~ files on ~/emacs/_backup
+;; =============================
+;; (setq backup-directory-alist '(("." . ,(expand-file-name "~/emacs/_backup/"))))
+;; (setq backup-by-copying t)
 
 ;; =============================
 ;; VTERM
@@ -83,12 +89,16 @@
         js2-basic-offset 4))
 
 ;; =============================
-;; WEB MODE SETUP
+;; WEB MODE SETUP with Emmet
 ;; =============================
 (use-package web-mode
   :ensure t
   :mode ("\\.html\\'" "\\.jsx\\'" "\\.tsx\\'")
   :hook ((web-mode . my/web-mode-setup)))
+
+(use-package emmet-mode
+  :ensure t
+  :hook ((web-mode . emmet-mode)))
 
 (defun my/web-mode-setup ()
   "Custom setup for web-mode with LSP, company, and formatting."
@@ -96,12 +106,14 @@
   (display-line-numbers-mode 1)
   (company-mode 1)
   (lsp) ;; Starts language server
-  (prettier-js-mode 1)) ;; Format on save
+  (prettier-js-mode 1) ;; Format on save
+  (emmet-mode 1)) ;; 
 
 ;; Optional: additional settings for indentation, etc.
 (setq web-mode-markup-indent-offset 2)
 (setq web-mode-code-indent-offset 2)
 (setq web-mode-css-indent-offset 2)
+
 
 ;; =============================
 ;; ASTRO MODE SETUP
@@ -114,6 +126,7 @@
             (lambda ()
               (when (string-equal "astro" (file-name-extension buffer-file-name))
                 (lsp)
+		(emmet-mode 1)
                 (prettier-js-mode 1)))))
 
 ;; =============================
@@ -161,13 +174,12 @@
 (use-package chatgpt-shell
   :commands (chatgpt-shell)
   :init
-  (setq chatgpt-shell-backend 'openai
-        chatgpt-shell-openai-model "gpt-4"
-        chatgpt-shell-openai-key
-        (auth-source-pick-first-password :host "api.openai.com")))
-
-(with-eval-after-load 'chatgpt-shell
-  (setq chatgpt-shell-backend 'openai))
+  ;; Set the backend to Gemini
+  (setq chatgpt-shell-backend 'gemini
+        ;; You can specify a model, e.g., "gemini-1.5-flash", or leave it as default
+        chatgpt-shell-gemini-model "gemini-1.5-flash"
+        ;; Get the key from an environment variable
+        chatgpt-shell-google-key (getenv "GEMINI_API_KEY")))
 
 ;; =============================
 ;; ORG MODE
@@ -179,7 +191,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(chatgpt-shell company js2-mode lsp-ui neotree prettier-js
+   '(chatgpt-shell company emmet-mode js2-mode lsp-ui neotree prettier-js
 		   typescript-mode web-mode web-mode-edit-element
 		   yasnippet-snippets)))
 (custom-set-faces
